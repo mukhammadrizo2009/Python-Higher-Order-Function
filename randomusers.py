@@ -693,8 +693,16 @@ def get_usernames_starting_with(data: dict, letter: str) -> list[str]:
     Returns:
         list[str]: List of matching usernames.
     """
-    pass
-
+    filtered_users = filter(
+        lambda user: user['login'] ['username'].startswith(letter),
+        data['results']
+    )
+    
+    users = list(map(
+        lambda user: user['login'] ['username'],
+        filtered_users
+    ))
+    return users
 
 def get_average_age(data: dict) -> float:
     """
@@ -706,7 +714,12 @@ def get_average_age(data: dict) -> float:
     Returns:
         float: Average age.
     """
-    pass
+    ages = list(map(
+        lambda user: user['dob'] ['age'],
+        data['results']
+    ))
+    
+    return sum(ages) / len(ages)
 
 
 def group_users_by_nationality(data: dict) -> dict:
