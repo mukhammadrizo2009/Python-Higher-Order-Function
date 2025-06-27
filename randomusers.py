@@ -569,6 +569,8 @@ randomuser_data = {
     }
 }
 
+def get_fullname(user):
+    return f"{user['name']['first']} {user['name']['last']}"
 
 def get_full_names(data: dict) -> list[str]:
     """
@@ -794,7 +796,17 @@ def find_users_in_timezone(data: dict, offset: str) -> list[dict]:
     Returns:
         list[dict]: List of users with full name and city.
     """
-    pass
+    filtered_users = filter(
+        lambda user: user['location']['timezone']['offset'] == offset,
+        data['results']
+    )
+    
+    users = list(map(
+        lambda user: {"name": get_fullname(user), "city": user['location']['city']},
+        filtered_users
+    ))
+    
+    return users
 
 
 def get_registered_before_year(data: dict, year: int) -> list[dict]:
