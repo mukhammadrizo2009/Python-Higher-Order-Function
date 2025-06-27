@@ -580,8 +580,12 @@ def get_full_names(data: dict) -> list[str]:
     Returns:
         list[str]: List of full names.
     """
-    pass
-
+    full_names = list(map(
+        lambda user: f"{user['name'] ['first']} {user['name'] ['last']}",
+        data['results']
+    ))
+    
+    return full_names
 
 def get_users_by_country(data: dict, country: str) -> list[dict]:
     """
@@ -594,8 +598,18 @@ def get_users_by_country(data: dict, country: str) -> list[dict]:
     Returns:
         list[dict]: List of dictionaries containing full name and email of matching users.
     """
-    pass
-
+    filtered_users = filter(
+        lambda user: user['location'] ['country'].lower() == country.lower(),
+        data['results']
+        
+    )
+    
+    users = list(map(
+        lambda user: {'name': user['name'] ['first'], 'email': user['email']},
+        filtered_users
+    ))
+    
+    return users
 
 def count_users_by_gender(data: dict) -> dict:
     """
@@ -607,7 +621,19 @@ def count_users_by_gender(data: dict) -> dict:
     Returns:
         dict: Dictionary with gender as keys and count as values.
     """
-    pass
+    males = list(filter(
+        lambda user: user['gender'].lower() == 'male',
+        data['results']
+    ))
+    females = list(filter(
+    lambda user: user['gender'].lower() == 'female',
+    data['results']
+    ))
+    
+    return {
+        "male": len(males),
+        "female": len(females)
+    }
 
 
 def get_emails_of_older_than(data: dict, age: int) -> list[str]:
@@ -621,8 +647,17 @@ def get_emails_of_older_than(data: dict, age: int) -> list[str]:
     Returns:
         list[str]: List of email addresses.
     """
-    pass
+    filtered_users = filter(
+        lambda user: user['dob'] ['age'] > age,
+        data['results']
+    )
+    
+    users = list(map(
+        lambda user: user['email'],
+        filtered_users
+    ))
 
+    return users
 
 def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
     """
