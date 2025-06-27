@@ -753,7 +753,12 @@ def get_all_coordinates(data: dict) -> list[tuple[str, str]]:
     Returns:
         list[tuple[str, str]]: List of coordinate tuples.
     """
-    pass
+    coordinates = list(map(
+        lambda user: (user['location'] ['coordinates']['latitude'], user['location']['coordinates']['longitude']),
+        data['results']
+    ))
+    
+    return coordinates
 
 
 def get_oldest_user(data: dict) -> dict:
