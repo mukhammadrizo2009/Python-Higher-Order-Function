@@ -732,7 +732,15 @@ def group_users_by_nationality(data: dict) -> dict:
     Returns:
         dict: Dictionary with nationality as keys and count as values.
     """
-    pass
+    group = {}
+    
+    for user in data['results']:
+        if user['nat'] not in group.keys():
+            group[user['nat']] = 1
+        else:
+            group[user['nat']] += 1
+            
+    return group
 
 
 def get_all_coordinates(data: dict) -> list[tuple[str, str]]:
