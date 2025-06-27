@@ -670,8 +670,17 @@ def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
     Returns:
         list[dict]: List of users with name and age sorted accordingly.
     """
-    pass
-
+    sorted_users = sorted(
+        data['results'],
+        key=lambda user: user['dob'] ['age'],
+        reverse=descending
+    )
+    
+    users = list(map(
+        lambda user: {"name": user['name'] ['first'], "age": user['dob']['age']},
+        sorted_users
+    ))
+    return users
 
 def get_usernames_starting_with(data: dict, letter: str) -> list[str]:
     """
